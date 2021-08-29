@@ -1,5 +1,5 @@
 const { AuthenticationError } = require('apollo-server-express');
-const { User } = require('../models');
+const { User,Book } = require('../models');
 const { signToken } = require('../utils/auth');
 
 const resolvers = {
@@ -14,8 +14,8 @@ const resolvers = {
   },
 
   Mutation: {
-    addUser: async (parent, { name, email, password }) => {
-      const user = await User.create({ name, email, password });
+    addUser: async (parent, { username, email, password }) => {
+      const user = await User.create({ username, email, password });
       const token = signToken(user);
       if (!user) {
         throw new AuthenticationError('No profile with this email found!');
@@ -42,11 +42,39 @@ const resolvers = {
     },
 
     // Set up mutation so a logged in user can only remove their profile and no one else's
-    removeBook: async (parent, args, context) => {
-      if (context.user) {
-        return User.findOneAndDelete({ _id: context.user._id });
+    // saveBook(authors: $saveBookAuthors, description: $saveBookDescription, bookId: $saveBookBookId, title: $saveBookTitle)
+    saveBook: async (parent, {newBook,token}) => {
+      // If user not signed in then they cannot save a book
+      try{
+        const bookUpdate = await User.findOneAndUpdate({token: token},{$push:{'savedBooks':{...newBook}}});
+        // const bookUpdate = await User.findOneAndUpdate({token: token},{$push:{'savedBooks':{...bookToSave}}});
+        if(!bookUpdate){
+          throw new Error('Could not add the user');
+        }
+        console.log(bookUpdate);
+        return bookUpdate;
+      } catch (err){
+        console.log(err);
       }
-      throw new AuthenticationError('You need to be logged in!');
+      // Create a new book
+      // Add the book id to the user
+    },
+
+    removeBook: async (parent, {bookId}) => {
+      // If user not signed in then they cannot save a book
+      try{
+        const bookUpdate = await User.findOneAndUpdate({token: token},{$pull:{savedBooks:{'bookId':bookId}}});
+        // const bookUpdate = await User.findOneAndUpdate({token: token},{$push:{'savedBooks':{...bookToSave}}});
+        if(!bookUpdate){
+          throw new Error('Could not add the user');
+        }
+        console.log(bookUpdate);
+        return bookUpdate;
+      } catch (err){
+        console.log(err);
+      }
+      // Create a new book
+      // Add the book id to the user
     },
   },
 };
