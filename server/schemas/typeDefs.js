@@ -6,6 +6,7 @@ const typeDefs = gql`
     username: String
     email: String
     password: String
+    bookCount: Int
     savedBooks: [Book]
   }
 
@@ -23,6 +24,15 @@ const typeDefs = gql`
     user: User
   }
 
+  input saveBookContent {
+    authors: [String]
+    description: String!
+    title: String!
+    bookId: String!
+    image: String
+    link: String
+}
+
   type Query {
     # Because we have the context functionality in place to check a JWT and decode its data, we can use a query that will always find and return the logged in user's data
     me: User
@@ -36,14 +46,6 @@ const typeDefs = gql`
     removeBook(bookId: String!): User
   }
 
-  input saveBookContent {
-    authors: [String]
-    description: String!
-    title: String!
-    bookId: String!
-    image: String
-    link: String
-}
 `;
 
 module.exports = typeDefs;
