@@ -9,9 +9,6 @@ import Auth from '../utils/auth';
 const AppNavbar = () => {
   // set modal display state
   const [showModal, setShowModal] = useState(false);
-  if(Auth.isTokenExpired()){
-    localStorage.removeItem("id_token");
-  }
   return (
     <>
       <Navbar bg='dark' variant='dark' expand='lg'>

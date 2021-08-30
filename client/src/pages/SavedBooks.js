@@ -15,6 +15,8 @@ const SavedBooks = () => {
   if (loading) return 'Loading...';
   if (error) return `Error! ${error.message}`;
 
+  console.log(data);
+
   const userData = data?.me || {savedBooks:[]};
   // create function that accepts the book's mongo _id value as param and deletes the book from the database
   const handleDeleteBook = async (bookId) => {

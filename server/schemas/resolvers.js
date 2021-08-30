@@ -14,8 +14,7 @@ const resolvers = {
     },
 
     me: async (parent, args, context) => {
-        return User.findOne({ _id: '612c4cbcf9e503681869523a' });
-      // return User.findOne({_id:'612c4cbcf9e503681869523a',})
+        return User.findOne({ _id: context.user._id });
       throw new AuthenticationError("You need to be logged in!");
     },
   },
