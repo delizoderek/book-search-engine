@@ -1,6 +1,10 @@
 # Book Search Engine
   ## Description
-  For thIs assignment I upgraded a REST API to use GraphQl instead of express routes. The user has the ability to search for a book and add it to their saved books. They can alos view their saved books if logged in and remove them from the list. Details for the assignment can be outlined ![here](AssignmentDetails.md)
+  For this assignment I upgraded a REST API to use GraphQl instead of express routes. The user has the ability to search for a book and add it to their saved books. They can alos view their saved books if logged in and remove them from the list. Details for the assignment can be outlined ![here](AssignmentDetails.md)
+
+  Test User Credentials:
+  email: `admin@admin.admin`
+  password: `password`
   ## Table of Contents
   - [Installation](#installation)
   - [Usage](#usage)
