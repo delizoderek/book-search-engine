@@ -71,7 +71,6 @@ const SearchBooks = () => {
 
 
     try {
-      console.log(bookToSave);
       const {data} = await saveBook({variables:{content: bookToSave}});
 
       if(error){
